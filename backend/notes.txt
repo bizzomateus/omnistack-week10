@@ -1,0 +1,14 @@
+app.use(express.json()); // configura express para entender requisições com corpo json
+app.use(routes);
+
+// Tipos de parametros / METODO HTTP
+
+// Query Params: req.query (filtros, rodenação, paginação) / GET
+// Route Params: req.params (identificar um recurso na  alteração ou remoção) / DELETE
+// Body: request.body (dados para alteração ou criação de um registro) / POST ou PUT
+
+// app.delete('/', (req,responte)) --- console.log(req.params)
+
+// app.get('/', (request, response) => {
+//     return response.json({ message: 'JSON GET RESPONSE!!'});
+// });
