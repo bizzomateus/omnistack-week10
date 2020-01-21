@@ -15,28 +15,30 @@ module.exports = {
     async store(request, response) {
         const { github_username, techs, latitude, longitude } = request.body;
 
-        let user = User.findOne({ github_username });
+        let user = await User.findOne({ github_username });
 
-        if (!dev) {
+        if (!user) {
             const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
-            const { name = login, avatar_url, bio = 'Normal bio' } = apiResponse.data;
-
-            techArray = parseStringAsArray(techs);
-
+            
+            const { name = login, avatar_url, bio } = apiResponse.data;
+            
+            techsArray = parseStringAsArray(techs);
+            
             const location = {
                 type: 'Point',
                 coordinates: [longitude, latitude],
             };
-
+            
             user = await User.create({
                 github_username,
                 name,
                 avatar_url,
                 bio,
-                techs: techArray,
+                techs: techsArray,
                 location,
             });
         }
+
         return response.json(user);
     }
 };
